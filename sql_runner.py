@@ -9,6 +9,7 @@ import psycopg2
 import psycopg2.extras
 import pandas as pd
 import pandas.io.sql as psql
+from math import ceil,floor
 
 def get_cols(sql):
 	rets=[]
@@ -34,6 +35,7 @@ def apply_params(sql,params):
 	for param in params:
 		sql=sql.replace('$'+param+'$',mappings[param])
 	return sql
+
 #Runs a SQL statement (with markup) and returns a list of dataframes with the data
 def run_query(sql,conn):
 	lines = sql.split("\n")
@@ -70,6 +72,7 @@ def run_query(sql,conn):
 			try:
 				df = psql.read_sql(pivot_sql,conn)
 				pivoted = df.pivot(index=pivot_columns[0],columns=pivot_columns[1],values=pivot_columns[2])
+				#pivoted = df.pivot(index=pivot_columns[0],columns=pivot_columns[1])
 				output.append(pivoted)
 			except TypeError:
 				pass
@@ -131,9 +134,84 @@ def run_query(sql,conn):
 			transformed_sql+=line+"\n"
 	return output
 
+def row_to_string(row,sizes=None,types=None,mode="row",separator='|'):
+	parts = []
+	for i,v in enumerate(row):
+		if v is None:
+			val=""
+		else:
+			val=str(v)
+		whitespace=sizes[i]-len(val)+2
+		if mode=="header":
+			parts.append( "".join([" "]*ceil(whitespace/2))+val+"".join([" "]*floor(whitespace/2)) )
+		elif mode=="row":
+			if types[i]=="int":
+				parts.append( "".join([" "]*(whitespace-1))+val+" " )
+			elif types[i]=="dec":
+				parts.append( "".join([" "]*(whitespace-1))+val+" " )
+			elif types[i]=="date":
+				parts.append( "".join([" "]*(whitespace-1))+val+" " )
+			elif types[i]=="str":
+				parts.append( "".join([" "]*(whitespace-1))+val+" " )
+	return separator.join(parts)			
+				
+		
+
 #Prints a dataframe nicely, replacing Nones with empty string and nice column/row separators
-def pretty_print(df):
-	print(df)
+int_regex = re.compile(r'-?[0-9]+')
+dec_regex = re.compile(r'-?[0-9]+(\.[0-9+])?')
+date_regex= re.compile(r'[0-9]+-[0-9]+-[0-9]')
+def pretty_print(df,border=False,align_decimals=False,print_index=False):
+	widths = []
+	types  = [] 
+	header_row = list(df.columns)
+
+	print_index=print_index or type(df.index)==pd.core.index.Index
+	if print_index:
+		index_width=0
+		for i in list(df.index):
+			index_width=max(index_width,len(str(i)))
+		widths=[index_width]
+		types =["str"]
+		header_row=[""]+header_row
+
+	for col in list(df.columns):
+		header_len = len(col)
+		col_width = 0
+		is_int = True
+		is_dec = True
+		is_date= True
+		for i in df[col]:
+			if i is not None:
+				col_width=max(col_width,len(str(i)))
+				is_int = is_int  and  int_regex.fullmatch(str(i)) is not None
+				is_dec = is_dec  and  dec_regex.fullmatch(str(i)) is not None
+				is_date= is_date and date_regex.fullmatch(str(i)) is not None
+		widths.append(max(header_len,col_width))
+		if is_int:
+			types.append("int")
+		elif is_dec:
+			types.append("dec")
+		elif is_date:
+			types.append("date")
+		else:
+			types.append("str")
+	
+	rows=[]
+	rows.append(row_to_string(header_row,sizes=widths,mode="header"))
+	
+	header_seps=[]
+	for i in widths:
+		header_seps.append("".join(["-"]*(i+2)))
+	rows.append("+".join(header_seps))
+	
+	start_column=1
+	if print_index:
+		start_column=0
+	
+	for row in df.itertuples():
+		rows.append(row_to_string(row[start_column:],types=types,sizes=widths))
+	print("\n".join(rows))
 
 
 
@@ -230,4 +308,5 @@ if __name__ == "__main__":
 
 		for i in data:
 			pretty_print(i)
+			print()
 
