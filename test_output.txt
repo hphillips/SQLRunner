@@ -1,0 +1,109 @@
+   team team2 score
+0   NYE   LDN   2-3
+1   NYE   PHI   3-1
+2   NYE   SEO   3-2
+3   NYE   HOU   4-0
+4   NYE   BOS   4-0
+5   NYE   SFS   4-0
+6   NYE   FLA   3-1
+7   NYE   SHD   4-0
+8   LDN   NYE   3-2
+9   LDN   PHI   4-0
+10  LDN   GLA   1-3
+11  LDN   SEO   4-0
+12  LDN   HOU   2-3
+13  LDN   BOS   4-0
+14  LDN   SFS   3-1
+15  LDN   FLA   3-1
+16  PHI   NYE   1-3
+17  PHI   LDN   0-4
+18  PHI   GLA   3-1
+19  PHI   SEO   1-3
+20  PHI   HOU   3-2
+21  PHI   BOS   4-0
+22  PHI   FLA   4-0
+23  PHI   DAL   4-0
+24  PHI   SHD   4-0
+25  GLA   LDN   3-1
+26  GLA   PHI   1-3
+27  GLA   SEO   1-3
+28  GLA   VAL   4-0
+29  GLA   HOU   3-2
+30  GLA   SFS   4-0
+31  GLA   FLA   2-1
+32  GLA   DAL   1-3
+33  GLA   SHD   4-0
+34  SEO   NYE   2-3
+35  SEO   LDN   0-4
+36  SEO   PHI   3-1
+37  SEO   GLA   3-1
+38  SEO   VAL   4-0
+39  SEO   HOU   1-3
+40  SEO   SFS   3-1
+41  SEO   DAL   3-1
+42  SEO   SHD   3-1
+43  VAL   GLA   0-4
+44  VAL   SEO   0-4
+45  VAL   HOU   4-0
+46  VAL   BOS   2-3
+47  VAL   SFS   3-1
+48  VAL   FLA   1-3
+49  VAL   DAL   3-1
+50  VAL   SHD   3-0
+51  HOU   NYE   0-4
+52  HOU   LDN   3-2
+53  HOU   PHI   2-3
+54  HOU   GLA   2-3
+55  HOU   SEO   3-1
+56  HOU   VAL   0-4
+57  HOU   BOS   4-0
+58  HOU   SFS   1-3
+59  HOU   FLA   3-2
+    ...   ...   ...
+
+[104 rows x 3 columns]
+team2  BOS  DAL  FLA  GLA  HOU  LDN  NYE  PHI  SEO  SFS  SHD  VAL
+team                                                             
+BOS    NaN  4-0  4-0  NaN  0-4  0-4  0-4  0-4  NaN  NaN  4-0  3-2
+DAL    0-4  NaN  2-3  3-1  NaN  NaN  NaN  0-4  1-3  0-3  3-1  1-3
+FLA    0-4  3-2  NaN  1-2  2-3  1-3  1-3  0-4  NaN  3-2  NaN  3-1
+GLA    NaN  1-3  2-1  NaN  3-2  3-1  NaN  1-3  1-3  4-0  4-0  4-0
+HOU    4-0  NaN  3-2  2-3  NaN  3-2  0-4  2-3  3-1  1-3  4-0  0-4
+LDN    4-0  NaN  3-1  1-3  2-3  NaN  3-2  4-0  4-0  3-1  NaN  NaN
+NYE    4-0  NaN  3-1  NaN  4-0  2-3  NaN  3-1  3-2  4-0  4-0  NaN
+PHI    4-0  4-0  4-0  3-1  3-2  0-4  1-3  NaN  1-3  NaN  4-0  NaN
+SEO    NaN  3-1  NaN  3-1  1-3  0-4  2-3  3-1  NaN  3-1  3-1  4-0
+SFS    NaN  3-0  2-3  0-4  3-1  1-3  0-4  NaN  1-3  NaN  4-0  1-3
+SHD    0-4  1-3  NaN  0-4  0-4  NaN  0-4  0-4  1-3  0-4  NaN  0-3
+VAL    2-3  3-1  1-3  0-4  4-0  NaN  NaN  NaN  0-4  3-1  3-0  NaN
+
+[12 rows x 12 columns]
+   team   NYE   LDN   PHI   GLA   SEO   VAL   HOU   BOS   SFS   FLA   DAL  \
+0   NYE  None   2-3   3-1  None   3-2  None   4-0   4-0   4-0   3-1  None   
+1   LDN   3-2  None   4-0   1-3   4-0  None   2-3   4-0   3-1   3-1  None   
+2   PHI   1-3   0-4  None   3-1   1-3  None   3-2   4-0  None   4-0   4-0   
+3   GLA  None   3-1   1-3  None   1-3   4-0   3-2  None   4-0   2-1   1-3   
+4   SEO   2-3   0-4   3-1   3-1  None   4-0   1-3  None   3-1  None   3-1   
+5   VAL  None  None  None   0-4   0-4  None   4-0   2-3   3-1   1-3   3-1   
+6   HOU   0-4   3-2   2-3   2-3   3-1   0-4  None   4-0   1-3   3-2  None   
+7   BOS   0-4   0-4   0-4  None  None   3-2   0-4  None  None   4-0   4-0   
+8   SFS   0-4   1-3  None   0-4   1-3   1-3   3-1  None  None   2-3   3-0   
+9   FLA   1-3   1-3   0-4   1-2  None   3-1   2-3   0-4   3-2  None   3-2   
+10  DAL  None  None   0-4   3-1   1-3   1-3  None   0-4   0-3   2-3  None   
+11  SHD   0-4  None   0-4   0-4   1-3   0-3   0-4   0-4   0-4  None   1-3   
+
+     SHD  
+0    4-0  
+1   None  
+2    4-0  
+3    4-0  
+4    3-1  
+5    3-0  
+6    4-0  
+7    4-0  
+8    4-0  
+9   None  
+10   3-1  
+11  None  
+
+[12 rows x 13 columns]
