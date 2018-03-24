@@ -174,20 +174,20 @@ def pretty_print(df,border=False,align_decimals=False,print_index=False):
 		widths=[index_width]
 		types =["str"]
 		header_row=[""]+header_row
-
-	for col in list(df.columns):
-		header_len = len(col)
-		col_width = 0
+	for col_num,col in enumerate(list(df.columns)):
+		col_width = len(col)
 		is_int = True
 		is_dec = True
 		is_date= True
-		for i in df[col]:
+		for i in df.iloc[:,col_num]:
 			if i is not None:
+				if len(str(i))>col_width:
+					col_width=len(str(i))
 				col_width=max(col_width,len(str(i)))
 				is_int = is_int  and  int_regex.fullmatch(str(i)) is not None
 				is_dec = is_dec  and  dec_regex.fullmatch(str(i)) is not None
 				is_date= is_date and date_regex.fullmatch(str(i)) is not None
-		widths.append(max(header_len,col_width))
+		widths.append(col_width)
 		if is_int:
 			types.append("int")
 		elif is_dec:
@@ -196,10 +196,8 @@ def pretty_print(df,border=False,align_decimals=False,print_index=False):
 			types.append("date")
 		else:
 			types.append("str")
-	
 	rows=[]
 	rows.append(row_to_string(header_row,sizes=widths,mode="header"))
-	
 	header_seps=[]
 	for i in widths:
 		header_seps.append("".join(["-"]*(i+2)))
